@@ -1,13 +1,12 @@
 /*
-    Jason Downing - Software Developer
-    Contact: jason@downing.io
+    Aditya Kumar
+    Contact: adityabehera23@gmail.com
     
     MIT Licensed - see http://opensource.org/licenses/MIT for details.
     Anyone may freely use this code. Just don't sue me if it breaks stuff.
-    Created: Jan 9, 2018
+    Created: October 1st, 2020
+    Last Updated: 
     
-    This JS file loads all images in the /img/album/ directory into the 
-    nanogallery2
     
     ** Useful URLs **
     GitHub API Docs:    https://developer.github.com/v3/
@@ -22,7 +21,7 @@ var imgList = [];
 // GitHub API End Point URL / Path
 var githubApiVersion = "application/vnd.github.v3+json";
 var githubApiBaseUrl = "https://api.github.com";
-var githubRepo = "Beauty-Odisha";
+var githubRepo = "Trekking";
 var githubPath = "img/album/";
 var githubBranch = "master";
 
@@ -42,7 +41,7 @@ $( document ).ready(function() {
   // API docs page for Getting Repository Contents: https://developer.github.com/v3/repos/contents/
   var request = $.ajax({
     
-    // Example: https://api.github.com/repos/Adityansh2334/Beauty-Odisha/contents/img/album/
+    // Example: https://api.github.com/repos/Adityansh2334/Trekking/contents/img/album/
     url: githubGetRequest,
     
     // Need to provide the branch so we pull from gh-pages and NOT master
@@ -88,17 +87,87 @@ $( document ).ready(function() {
     // Debugging
     console.log(imgList);
   
-    $("#nanogallery2").nanogallery2({
+    $("#nanogallery").nanogallery2({
+      // GALLERY AND THUMBNAIL LAYOUT
+      galleryMosaic : [                       // default layout
+        { w: 2, h: 2, c: 1, r: 1 },
+        { w: 1, h: 1, c: 3, r: 1 },
+        { w: 1, h: 1, c: 3, r: 2 },
+        { w: 1, h: 2, c: 4, r: 1 },
+        { w: 2, h: 1, c: 5, r: 1 },
+        { w: 2, h: 2, c: 5, r: 2 },
+        { w: 1, h: 1, c: 4, r: 3 },
+        { w: 2, h: 1, c: 2, r: 3 },
+        { w: 1, h: 2, c: 1, r: 3 },
+        { w: 1, h: 1, c: 2, r: 4 },
+        { w: 2, h: 1, c: 3, r: 4 },
+        { w: 1, h: 1, c: 5, r: 4 },
+        { w: 1, h: 1, c: 6, r: 4 }
+      ],
+      galleryMosaicXS : [                     // layout for XS width
+        { w: 2, h: 2, c: 1, r: 1 },
+        { w: 1, h: 1, c: 3, r: 1 },
+        { w: 1, h: 1, c: 3, r: 2 },
+        { w: 1, h: 2, c: 1, r: 3 },
+        { w: 2, h: 1, c: 2, r: 3 },
+        { w: 1, h: 1, c: 2, r: 4 },
+        { w: 1, h: 1, c: 3, r: 4 }
+      ],
+      galleryMosaicSM : [                     // layout for SM width
+        { w: 2, h: 2, c: 1, r: 1 },
+        { w: 1, h: 1, c: 3, r: 1 },
+        { w: 1, h: 1, c: 3, r: 2 },
+        { w: 1, h: 2, c: 1, r: 3 },
+        { w: 2, h: 1, c: 2, r: 3 },
+        { w: 1, h: 1, c: 2, r: 4 },
+        { w: 1, h: 1, c: 3, r: 4 }
+      ],
+      galleryMaxRows: 1,
+      galleryDisplayMode: 'rows',
+      gallerySorting: 'random',
+      thumbnailDisplayOrder: 'random',
+
+      thumbnailHeight: '180', thumbnailWidth: '220',
+      thumbnailAlignment: 'scaled',
+      thumbnailGutterWidth: 0, thumbnailGutterHeight: 0,
+      thumbnailBorderHorizontal: 0, thumbnailBorderVertical: 0,
+
+      thumbnailToolbarImage: null,
+      thumbnailToolbarAlbum: null,
+      thumbnailLabel: { display: false },
+
+      // DISPLAY ANIMATION
+      // for gallery
+      galleryDisplayTransitionDuration: 1500,
+      // for thumbnails
+      thumbnailDisplayTransition: 'imageSlideUp',
+      thumbnailDisplayTransitionDuration: 1200,
+      thumbnailDisplayTransitionEasing: 'easeInOutQuint',
+      thumbnailDisplayInterval: 60,
+
+      // THUMBNAIL HOVER ANIMATION
+      thumbnailBuildInit2: 'image_scale_1.15',
+      thumbnailHoverEffect2: 'thumbnail_scale_1.00_1.05_300|image_scale_1.15_1.00',
+      touchAnimation: true,
+      touchAutoOpenDelay: 500,
+
+      // LIGHTBOX
+      viewerToolbar: { display: false },
+      viewerTools:    {
+        topLeft:   'label',
+        topRight:  'shareButton, rotateLeft, rotateRight, fullscreenButton, closeButton'
+      },
+
+      // GALLERY THEME
+      galleryTheme : { 
+        thumbnail: { background: '#111' },
+      },
       
-      // Gallery Settings
-      thumbnailHeight:  "auto",
-      thumbnailWidth:   300,
-      thumbnailBaseGridHeight: 100,
-      thumbnailGutterWidth: 0,          // Don't place the thumbnails apart from each other
-      thumbnailGutterHeight: 0,
-      thumbnailBorderHorizontal: 3,     // Let the border it's job instead
-      thumbnailBorderVertical: 3,
-      items: imgList                    // This is a JSON object with imgPaths / Names
+      // DEEP LINKING
+      locationHash: true,
+
+      //Images from GitHub
+      items: imgList
     });
   });
 });
